@@ -1,3 +1,5 @@
+//file path: app/projects/[slug]/page.tsx
+
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { projects } from '@/lib/projects';

@@ -1,12 +1,14 @@
+//file path: app/layout.tsx
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import GsapProvider from '@/components/providers/GsapProvider';
 import SmoothScroll from "@/components/providers/SmoothScroll";
-import Cursor from "@/components/ui/Cursor";
+import RouteChangeRefresh from "@/components/providers/RouteChangeRefresh";
 import Nav from "@/components/ui/Nav";
-import PageTransition from "@/components/transition/PageTransition";
+import Footer from "@/components/ui/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +30,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
         <GsapProvider>
+          <RouteChangeRefresh />
           <SmoothScroll>
-            <Cursor />
             <Nav />
-            <PageTransition>{children}</PageTransition>
+            {children}
+            <Footer />
           </SmoothScroll>
         </GsapProvider>
       </body>

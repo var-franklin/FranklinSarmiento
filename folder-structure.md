@@ -1,25 +1,37 @@
 # File Tree: franklinsarmiento
 
-**Generated:** 8/25/2026, 9:49:41 PM
+**Generated:** 8/26/2026, 8:09:46 PM
 **Root Path:** `d:\Program Files\Visual Studio Code\Projects\franklinsarmiento`
 
 ```
 ├── app
+│   ├── projects
+│   │   ├── [slug]
+│   │   │   └── page.tsx
+│   │   └── page.tsx
 │   ├── favicon.ico
 │   ├── globals.css
 │   ├── layout.tsx
+│   ├── not-found.tsx
 │   └── page.tsx
 ├── components
 │   ├── providers
 │   │   ├── GsapProvider.tsx
+│   │   ├── RouteChangeRefresh.tsx
 │   │   └── SmoothScroll.tsx
 │   ├── sections
+│   │   ├── about
+│   │   │   ├── About.tsx
+│   │   │   └── page.tsx
+│   │   ├── hero
+│   │   │   └── Hero.tsx
 │   │   └── projects
 │   │       └── ProjectGrid.tsx
 │   ├── transition
 │   │   └── PageTransition.tsx
 │   └── ui
 │       ├── Cursor.tsx
+│       ├── Footer.tsx
 │       └── Nav.tsx
 ├── lib
 │   └── projects.ts

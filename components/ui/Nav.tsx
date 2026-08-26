@@ -1,3 +1,5 @@
+//file path: components/ui/Nav.tsx
+
 'use client';
 
 import { useRef } from 'react';
@@ -10,8 +12,6 @@ import { useGSAP } from '@gsap/react';
 const LINKS = [
   { href: '/', label: 'Home' },
   { href: '/projects', label: 'Projects' },
-  // '/about' left out on purpose — your baseline doc still has "separate
-  // page vs. home section" open. Add it once that's decided.
 ];
 
 export default function Nav() {

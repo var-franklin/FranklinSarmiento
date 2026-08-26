@@ -1,10 +1,6 @@
-@import "tailwindcss";
+/* file path: app/globals.css */
 
-@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  body {
-    cursor: none;
-  }
-}
+@import "tailwindcss";
 
 :root {
   --background: #ffffff;

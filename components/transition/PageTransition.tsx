@@ -1,3 +1,5 @@
+//file path: components/transition/PageTransition.tsx
+
 'use client';
 
 import { useRef } from 'react';

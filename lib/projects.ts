@@ -1,32 +1,25 @@
 // lib/projects.ts
-//
-// Typed project data for the /projects routes and the home page's projects
-// section — both render this same array, unfiltered.
-//
-// Per content-structure-plan.md: structural fields (tech stack, dates, role,
-// links) are real where known. Narrative/marketing prose fields (summary,
-// description, highlights) are literal placeholders until real copy is
-// written — do not treat the bracketed text as content, it's a slot to fill.
-//
-// Screenshot paths point at real files in public/images/projects/, which
-// are flat (e.g. "cvsuhimay-01-overview.png") — don't reintroduce a nested
-// "/images/projects/<slug>/N.jpg" pattern here, that's not what's on disk.
-//
+
 export interface Project {
   slug: string; // used for /projects/[slug]
   title: string;
   role: string;
   timeframe: string;
   techStack: string[];
-  summary: string; // 1-line placeholder for grid cards
-  description: string; // longer placeholder for the case study body
-  highlights: string[]; // Problem / Approach / Result — placeholder text, real shape
-  githubUrl?: string; // omitted where no public repo exists, or the URL hasn't been supplied yet
+  summary: string; // 1-line, for grid cards
+  description: string; // longer case-study body
+  highlights: string[]; // Problem / Approach / Result
+  githubUrl?: string; // omitted where no public repo exists
   liveUrl?: string; // none exist yet, kept for later
   screenshots: string[]; // real screenshots where they exist; a commented
   // stand-in photo where they don't yet — every project keeps at least one
   // entry so card rendering never has to branch on an empty array
   videoUrl?: string;
+  // CvSUHimay and SupplyNest are the two featured on the home page — the
+  // stronger technical story and the real-client story, respectively.
+  // Revisit if you'd rather feature a different pair once everything has
+  // real screenshots.
+  featured: boolean;
 }
 
 export const projects: Project[] = [
@@ -35,15 +28,17 @@ export const projects: Project[] = [
     title: 'CvSUHimay',
     role: 'Full-Stack Developer',
     timeframe: 'Jun 2025 – May 2026',
-    techStack: ['React', 'Node.js', 'Express', 'MySQL', 'Tailwind CSS'],
-    summary: '[placeholder summary]',
-    description: '[placeholder description]',
+    techStack: ['React', 'Node.js', 'Express', 'MySQL', 'Tailwind CSS', 'Draco'],
+    summary:
+      'An undergraduate thesis project simulating fish deboning in 3D, with FSM-driven validation, gamified training, and instructor analytics — independently validated at 4.94/5.',
+    description:
+      "CvSUHimay is a 3D fish deboning training simulator built as an undergraduate thesis with a team of three, where I served as full-stack developer. The core engineering challenge was validation: correctly judging a trainee's deboning technique step-by-step required a robust rules engine, which I architected as a 13-state Mealy-type finite state machine, backed by a REST API over a 21-table MySQL schema with JWT/OAuth authentication. Rendering 3D bone-mesh assets at usable speed on low-end campus computers was a separate bottleneck — 204 individual bone meshes started at roughly 135MB, which I brought down to 344KB (a 99.75% reduction) by batching them into 4 atlas GLBs with Draco compression. On top of the core simulation, I built a gamification layer (XP, 6 rank tiers, 21 badges, a leaderboard) and an instructor-facing analytics dashboard with per-step error tracking and mastery scoring. The finished simulator was evaluated by 10 independent instructors against the ISO 25010 software quality standard, scoring 4.94 out of 5 overall, including perfect marks in functional suitability and security.",
     highlights: [
-      '[Problem — placeholder]',
-      '[Approach — placeholder]',
-      '[Result — placeholder]',
+      "Problem — Judging whether a trainee's fish-deboning technique is correct, step by step, needed a validation engine precise enough to catch errors in real time, not just a checklist.",
+      'Approach — Architected a 13-state Mealy-type FSM as the validation core, backed by a REST API over a 21-table MySQL schema with JWT/OAuth auth; separately solved a 3D-performance bottleneck by batching 204 bone meshes into 4 Draco-compressed atlas GLBs, cutting asset size 99.75% (~135MB → 344KB) for low-end campus machines.',
+      'Result — Validated by 10 independent instructors at 4.94/5 on the ISO 25010 standard, with perfect 5.00/5 scores in functional suitability and security.',
     ],
-    githubUrl: undefined, // TODO: paste the CvSUHimay repo URL — a public repo was confirmed found
+    githubUrl: 'https://github.com/var-franklin/CvSUHimay',
     liveUrl: undefined,
     screenshots: [
       '/images/projects/cvsuhimay-01-overview.png',
@@ -55,21 +50,28 @@ export const projects: Project[] = [
       // -01-overview.png, not a sixth distinct screenshot.
     ],
     videoUrl: undefined,
+    featured: true,
   },
   {
     slug: 'supplynest',
     title: 'SupplyNest',
     role: 'Full-Stack Developer',
     timeframe: 'Sep 2024 – Jan 2025',
-    techStack: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Chart.js'],
-    summary: '[placeholder summary]',
-    description: '[placeholder description]',
+    techStack: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Chart.js', 'FullCalendar'],
+    summary:
+      'A commissioned MERN point-of-sale system for a poultry and feed supplier, with live digital-scale integration for weight-based pricing and automated low-stock alerts.',
+    description:
+      "SupplyNest is a dual-role point-of-sale platform I helped build for Lucas Feeds and Poultry Supplies, a real agricultural retail client, as part of a three-person team. The business was still running on manual record-keeping, which made bulk-weight pricing slow and inventory visibility poor. We built a three-tier MERN system with Admin and Cashier roles, including a direct integration with the store's digital weighing scales that auto-calculates bulk pricing from live weight readings, real-time inventory tracking with automated low-stock alerts, Chart.js sales dashboards on a daily/weekly/monthly cadence, and FullCalendar-based delivery and payout reminders on a 5-minute auto-refresh for near-real-time visibility. The trickiest part wasn't the software logic — it was getting several different digital scale models to talk to the system reliably, which took working directly with the scale manufacturers to resolve compatibility and data-transfer issues. We also ran the system through direct client feedback sessions to keep it flexible enough for how varied their day-to-day bulk transactions actually were.",
     highlights: [
-      '[Problem — placeholder]',
-      '[Approach — placeholder]',
-      '[Result — placeholder]',
+      'Problem — A real poultry and feed retailer was running inventory and bulk-weight pricing by hand: slow, error-prone, and with no live visibility into stock or sales.',
+      'Approach — Built a three-tier MERN POS system with Admin/Cashier roles, live digital-scale integration for weight-based pricing, automated low-stock alerts, and Chart.js/FullCalendar dashboards; the hardest part was making several different scale models talk to the system reliably, solved by working directly with the manufacturers.',
+      'Result — Deployed for daily use at the client\'s shop, replacing manual record-keeping with real-time inventory and sales visibility, refined through direct client feedback sessions.',
     ],
-    githubUrl: undefined, // TODO: you confirmed a URL exists for this one — send it and I'll drop it in
+    // Repo is named Supply-Nest (capitalized, hyphenated) on GitHub, even
+    // though the slug/title here use the lowercase, unhyphenated form —
+    // doesn't matter functionally, just noting so the URL isn't "corrected"
+    // to match the slug by accident later.
+    githubUrl: 'https://github.com/var-franklin/Supply-Nest',
     liveUrl: undefined,
     screenshots: [
       '/images/projects/cvsuhimay-01-overview.png',
@@ -78,6 +80,7 @@ export const projects: Project[] = [
       // this comment once they're added.
     ],
     videoUrl: undefined,
+    featured: true,
   },
   {
     slug: 'bababook',
@@ -85,15 +88,17 @@ export const projects: Project[] = [
     role: 'Full-Stack Developer',
     // Genuinely unknown, not placeholder copy — no dates on the resume or on GitHub.
     timeframe: 'Unknown — no dates found on resume or GitHub',
-    techStack: ['React 19', 'Vite', 'Express', 'MongoDB', 'Tailwind CSS', 'Leaflet'],
-    summary: '[placeholder summary]',
-    description: '[placeholder description]',
+    techStack: ['React 19', 'Vite', 'Express', 'MongoDB', 'Tailwind CSS', 'Leaflet', 'Google Books API'],
+    summary:
+      'A three-role e-book library platform combining a public book catalog with real library borrowing workflows, library discovery on an interactive map, and reading-progress tracking.',
+    description:
+      "BaBaBook is a full-stack e-book library platform I built with one teammate, growing out of a research proposal we presented on making library resources more accessible to digital learners. It supports three roles: readers can browse and search books pulled from the Google Books API alongside locally uploaded titles, save titles to a reading list, request to borrow a physical copy from a specific library, track borrow status, and generate a printable borrowing ticket as a PDF; librarians can register a library account (held in a pending state until admin approval), manage their catalog, and approve or reject borrow requests; and admins approve librarian applications and manage user accounts platform-wide. Readers can also find nearby libraries on an interactive Leaflet/OpenStreetMap map with location search, and track their reading progress with bookmarks, annotations, and completion percentage. I was candid in the project's own documentation about what's still rough around the edges — authentication currently relies on a client-stored user object rather than signed tokens, and the Google Books API key is hardcoded rather than environment-configured — both flagged as the first things I'd fix with more time, alongside adding automated tests.",
     highlights: [
-      '[Problem — placeholder]',
-      '[Approach — placeholder]',
-      '[Result — placeholder]',
+      'Problem — Traditional school libraries are limited by physical space and book condition, while students increasingly expect to search, request, and track reading anywhere.',
+      'Approach — Built a three-role platform (Reader/Librarian/Admin) combining a Google Books API catalog with a real physical-borrowing workflow, an interactive Leaflet map for library discovery, and PDF borrowing tickets via jsPDF — on React 19, Vite, Express, and MongoDB.',
+      'Result — Shipped as a working full-stack platform with a candidly documented punch list (token-based auth, environment-configured API keys, automated tests) for what a production version would need next.',
     ],
-    githubUrl: undefined, // TODO: paste the BaBaBook repo URL — a public repo was confirmed found
+    githubUrl: 'https://github.com/var-franklin/BaBaBook',
     liveUrl: undefined,
     screenshots: [
       '/images/projects/cvsuhimay-01-overview.png',
@@ -102,6 +107,7 @@ export const projects: Project[] = [
       // comment once they're added.
     ],
     videoUrl: undefined,
+    featured: false,
   },
   {
     slug: 'odci-record-management',
@@ -109,14 +115,16 @@ export const projects: Project[] = [
     role: 'IT Intern / Team Lead',
     timeframe: 'Jul 2025 – Aug 2025',
     techStack: ['PHP', 'JavaScript'],
-    summary: '[placeholder summary]',
-    description: '[placeholder description]',
+    summary:
+      "A centralized document management platform I led development of during my IT internship, deployed across six departments at my university's Naic campus.",
+    description:
+      'During my IT internship in Cavite State University – Naic Campus\'s IT Department, I led a team of three in building the ODCI Record Management System, a centralized platform for managing departmental documents and records. It replaced a more fragmented, department-by-department approach to recordkeeping with a single system deployed across six departments campus-wide. As team lead, I was responsible for coordinating the build alongside my own hands-on development work in PHP and JavaScript.',
     highlights: [
-      '[Problem — placeholder]',
-      '[Approach — placeholder]',
-      '[Result — placeholder]',
+      'Problem — Departmental records across the Naic campus were being managed separately by each department, with no centralized system for document handling.',
+      'Approach — Led a three-person team building a centralized document management platform in PHP and JavaScript, while also contributing hands-on development.',
+      'Result — Deployed campus-wide across six departments during a two-month internship.',
     ],
-    githubUrl: undefined, // institutional project — a public repo is unlikely to exist, not just unconfirmed
+    githubUrl: undefined, // institutional project — no public repo exists
     liveUrl: undefined,
     screenshots: [
       '/images/projects/odci-01-login.png',
@@ -127,31 +135,32 @@ export const projects: Project[] = [
       '/images/projects/odci-06-admin-dashboard.png',
     ],
     videoUrl: undefined,
+    featured: false,
   },
   {
     slug: 'lab-manager',
     title: 'Lab Manager',
-    // Everything below is a genuine unknown, not marketing placeholder text —
-    // nothing about this project has been supplied beyond its name. Replace
-    // as soon as real details exist; don't treat these strings as content.
-    role: 'Unknown — no information provided yet',
-    timeframe: 'Unknown — no information provided yet',
-    techStack: [],
-    summary: '[placeholder summary]',
-    description: '[placeholder description]',
+    role: 'Full-Stack Developer — Web System',
+    timeframe: 'Jan 2025',
+    techStack: ['React', 'Vite', 'Node.js', 'Express', 'MongoDB', 'CSS'],
+    summary:
+      'A commissioned MERN system for tracking school lab equipment — availability, room assignment, and maintenance status — in real time across three roles.',
+    description:
+      "Lab Manager is a laboratory equipment management system I was commissioned to build, as the web half of a two-person freelance engagement — a teammate built a companion mobile app under the same contract, covering QR-code equipment scanning; this project covers the web system, which I built solo. It was commissioned by students at Manuel S. Enverga University Foundation for their school's lab. The core challenge was accuracy: a single equipment type can have units that are simultaneously free, checked out to a specific room, and pulled for maintenance, and all three states have to stay in sync rather than drift apart. I built the system around careful file and data organization and disciplined status tracking across the platform's three roles — Admin, Faculty, and Technician — with testing focused specifically on confirming that status logic held up correctly before considering any feature done. The whole engagement ran about a month, delivered as a fixed-scope freelance contract and handed off as source code on full payment.",
     highlights: [
-      '[Problem — placeholder]',
-      '[Approach — placeholder]',
-      '[Result — placeholder]',
+      'Problem — Lab equipment status isn\'t a simple in/out binary: a single item type can have units simultaneously free, distributed to a specific room, and under maintenance, and all three have to stay accurate together.',
+      'Approach — Built the web half of a two-person freelance engagement (a teammate handled a companion mobile app), focused on careful data organization and disciplined status tracking across three roles — Admin, Faculty, and Technician.',
+      'Result — Delivered solo on the web side within a one-month, fixed-scope freelance contract for Manuel S. Enverga University Foundation; handed off as source code on full payment.',
     ],
-    githubUrl: undefined,
+    githubUrl: 'https://github.com/var-franklin/Lab-Manager',
     liveUrl: undefined,
     screenshots: [
       '/images/projects/cvsuhimay-01-overview.png',
-      // TODO: STAND-IN, not a real Lab Manager screenshot — nothing about
-      // this project exists yet beyond its name. Swap for actual
-      // screenshots once there's anything to show.
+      // TODO: STAND-IN, not a real Lab Manager screenshot — purely
+      // handed-off source code at this point, no screenshots exist. Swap
+      // for actual screenshots if any become available.
     ],
     videoUrl: undefined,
+    featured: false,
   },
 ];

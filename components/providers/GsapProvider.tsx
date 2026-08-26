@@ -1,3 +1,5 @@
+//file path: components/providers/GsapProvider.tsx
+
 'use client';
 
 import gsap from 'gsap';

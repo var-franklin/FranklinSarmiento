@@ -1,3 +1,5 @@
+//file path: components/providers/SmoothScroll.tsx
+
 'use client';
 
 import { useRef } from 'react';
