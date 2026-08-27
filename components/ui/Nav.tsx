@@ -2,16 +2,20 @@
 
 'use client';
 
-import { useRef } from 'react';
+import { useRef, type MouseEvent } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { scrollToSection } from '@/lib/scrollToSection';
 
-const LINKS = [
+// "Projects" no longer routes to a /projects page (removed — the home page
+// now lists every project). sectionId marks it as an in-page scroll target
+// instead of a normal route.
+const LINKS: { href: string; label: string; sectionId?: string }[] = [
   { href: '/', label: 'Home' },
-  { href: '/projects', label: 'Projects' },
+  { href: '/#projects', label: 'Projects', sectionId: 'projects' },
 ];
 
 export default function Nav() {
@@ -62,12 +66,24 @@ export default function Nav() {
       </Link>
       <ul className="flex gap-6">
         {LINKS.map((link) => {
-          const isActive = pathname === link.href;
+          const isActive = link.sectionId ? false : pathname === link.href;
+
+          const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+            if (!link.sectionId) return;
+            if (pathname !== '/') return; // let Link navigate to "/#projects";
+            // HashScrollHandler takes it from there once we land on "/".
+
+            event.preventDefault();
+            scrollToSection(link.sectionId);
+          };
+
           return (
             <li key={link.href}>
               <Link
                 href={link.href}
                 data-cursor-hover
+                scroll={!link.sectionId}
+                onClick={handleClick}
                 aria-current={isActive ? 'page' : undefined}
                 className={isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100'}
               >

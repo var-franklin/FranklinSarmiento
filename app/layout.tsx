@@ -7,6 +7,7 @@ import "./globals.css";
 import GsapProvider from '@/components/providers/GsapProvider';
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import RouteChangeRefresh from "@/components/providers/RouteChangeRefresh";
+import HashScrollHandler from "@/components/providers/HashScrollHandler";
 import Nav from "@/components/ui/Nav";
 import Footer from "@/components/ui/Footer";
 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
         <GsapProvider>
           <RouteChangeRefresh />
+          <HashScrollHandler />
           <SmoothScroll>
             <Nav />
             {children}

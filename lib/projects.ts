@@ -6,6 +6,10 @@ export interface Project {
   role: string;
   timeframe: string;
   techStack: string[];
+  category: string; // short 2-4 word tag shown next to the title in the
+  // homepage project list (e.g. "POS System") — distinct from `summary`
+  // below, which is a full sentence not currently rendered anywhere in
+  // the UI but kept around for possible future use (e.g. meta description).
   summary: string; // 1-line, for grid cards
   description: string; // longer case-study body
   highlights: string[]; // Problem / Approach / Result
@@ -29,6 +33,7 @@ export const projects: Project[] = [
     role: 'Full-Stack Developer',
     timeframe: 'Jun 2025 – May 2026',
     techStack: ['React', 'Node.js', 'Express', 'MySQL', 'Tailwind CSS', 'Draco'],
+    category: '3D Training Simulator',
     summary:
       'An undergraduate thesis project simulating fish deboning in 3D, with FSM-driven validation, gamified training, and instructor analytics — independently validated at 4.94/5.',
     description:
@@ -58,6 +63,7 @@ export const projects: Project[] = [
     role: 'Full-Stack Developer',
     timeframe: 'Sep 2024 – Jan 2025',
     techStack: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Chart.js', 'FullCalendar'],
+    category: 'POS System',
     summary:
       'A commissioned MERN point-of-sale system for a poultry and feed supplier, with live digital-scale integration for weight-based pricing and automated low-stock alerts.',
     description:
@@ -89,6 +95,7 @@ export const projects: Project[] = [
     // Genuinely unknown, not placeholder copy — no dates on the resume or on GitHub.
     timeframe: 'Unknown — no dates found on resume or GitHub',
     techStack: ['React 19', 'Vite', 'Express', 'MongoDB', 'Tailwind CSS', 'Leaflet', 'Google Books API'],
+    category: 'E-Book Library Platform',
     summary:
       'A three-role e-book library platform combining a public book catalog with real library borrowing workflows, library discovery on an interactive map, and reading-progress tracking.',
     description:
@@ -115,6 +122,7 @@ export const projects: Project[] = [
     role: 'IT Intern / Team Lead',
     timeframe: 'Jul 2025 – Aug 2025',
     techStack: ['PHP', 'JavaScript'],
+    category: 'Document Management System',
     summary:
       "A centralized document management platform I led development of during my IT internship, deployed across six departments at my university's Naic campus.",
     description:
@@ -143,6 +151,7 @@ export const projects: Project[] = [
     role: 'Full-Stack Developer — Web System',
     timeframe: 'Jan 2025',
     techStack: ['React', 'Vite', 'Node.js', 'Express', 'MongoDB', 'CSS'],
+    category: 'Lab Equipment System',
     summary:
       'A commissioned MERN system for tracking school lab equipment — availability, room assignment, and maintenance status — in real time across three roles.',
     description:

@@ -2,14 +2,6 @@
 
 import Image from 'next/image';
 
-/**
- * Renders the About section inline on the home page. This used to support
- * a 'preview' | 'full' split tied to a standalone /about route (short
- * blurb + "Read more" on the home page, full content on /about). That
- * route is gone now that the site is Hero / About / Featured Projects /
- * CTA / Footer as a single page — so there's only one shape left, and the
- * variant prop and preview branch go with it.
- */
 export default function About() {
   return (
     <section id="about" className="mx-auto max-w-3xl px-6 py-24">
@@ -25,8 +17,35 @@ export default function About() {
         />
       </div>
 
-      <p className="mt-8">[placeholder bio]</p>
+      <div className="mt-8 space-y-4">
+        <p>
+          I build software across the whole stack: interfaces people
+          click through, and the backend systems quietly running
+          underneath them. Most of what I build ends up in the hands of
+          real organizations, not just class assignments. Most recently,
+          that&apos;s CvSUHimay, my thesis project.
+        </p>
+        <p>
+          I got into computers young, watching my uncle run his own
+          computer shop and letting me loose on whatever machine
+          wasn&apos;t busy at the time. That curiosity turned into a
+          computer science degree, and eventually into actually shipping
+          software people use.
+        </p>
+        <p>
+          Outside of code, I play guitar for my church&apos;s praise and
+          worship team, and I&apos;m working through a backlog of anime
+          and manga I doubt I&apos;ll ever finish.
+        </p>
+      </div>
 
+      {/*
+        Skills and Education weren't part of this round's brainstorm —
+        only the bio narrative got finalized — so these are left exactly
+        as placeholders rather than guessed at. See note below re: whether
+        "Skills" should even live inside About.tsx given the Hero → About
+        → Skills → Projects flow you described.
+      */}
       <h3 className="mt-10 text-xl font-medium">Skills</h3>
       <p className="mt-2">[placeholder skills list]</p>
 

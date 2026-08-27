@@ -3,36 +3,32 @@
 'use client';
 
 import { useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { projects } from '@/lib/projects';
 
-interface ProjectGridProps {
-  variant?: 'all' | 'featured';
-}
-
-export default function ProjectGrid({ variant = 'all' }: ProjectGridProps) {
-  const gridRef = useRef<HTMLDivElement>(null);
-
-  const visibleProjects =
-    variant === 'featured' ? projects.filter((project) => project.featured) : projects;
+/**
+ * Minimalist project list: title + short category tag per row, no
+ * thumbnails, in the order lib/projects.ts defines them. No `variant` prop
+ * anymore — this used to render a "featured" subset for the home page and
+ * a full grid on the now-removed /projects listing page; now there's only
+ * one list, shown in full on the home page.
+ */
+export default function ProjectGrid() {
+  const listRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      const container = gridRef.current;
+      const container = listRef.current;
       if (!container) return;
 
-      // container.children are the <Link> elements below, not the
-      // <article>s nested inside them — the opacity-0 / translate-y-8
-      // starting-state classes live on the Link for exactly that reason.
-      // Put them on the inner <article> instead and GSAP would animate the
-      // Link (which has no hidden state) while the article stayed invisible
-      // forever underneath it.
-      const cards = container.children;
-      if (cards.length === 0) return;
+      // container.children are the <Link> rows below — the opacity-0 /
+      // translate-y-8 starting-state classes live on the Link itself so
+      // GSAP animates the element that actually carries the hidden state.
+      const rows = container.children;
+      if (rows.length === 0) return;
 
       const mm = gsap.matchMedia();
 
@@ -42,7 +38,7 @@ export default function ProjectGrid({ variant = 'all' }: ProjectGridProps) {
           start: 'top 80%',
           once: true,
           onEnter: () => {
-            gsap.to(cards, {
+            gsap.to(rows, {
               opacity: 1,
               y: 0,
               duration: 0.6,
@@ -56,62 +52,27 @@ export default function ProjectGrid({ variant = 'all' }: ProjectGridProps) {
       });
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
-        gsap.set(cards, { opacity: 1, y: 0 });
+        gsap.set(rows, { opacity: 1, y: 0 });
       });
 
       return () => mm.revert();
     },
-    { scope: gridRef }
+    { scope: listRef }
   );
 
   return (
-    <div
-      ref={gridRef}
-      className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
-    >
-      {visibleProjects.map((project) => (
+    <div ref={listRef} className="flex flex-col border-t border-black/10 dark:border-white/10">
+      {projects.map((project) => (
         <Link
           key={project.slug}
           href={`/projects/${project.slug}`}
           data-cursor-hover
-          className="block translate-y-8 rounded-lg border border-black/10 bg-white p-4 opacity-0 dark:border-white/10 dark:bg-black"
+          className="flex translate-y-8 items-center justify-between gap-6 border-b border-black/10 py-6 opacity-0 dark:border-white/10"
         >
-          {/* Plain <article>, no className — kept for semantics only. All
-              layout and animation-state classes live on the Link above. */}
-          <article>
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md bg-black/5 dark:bg-white/5">
-              <Image
-                src={project.screenshots[0]}
-                alt={`${project.title} screenshot`}
-                fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-
-            <div className="mt-4 flex flex-col gap-2">
-              <h3 className="text-lg font-medium">{project.title}</h3>
-
-              <p className="text-sm text-black/60 dark:text-white/60">
-                {project.role} · {project.timeframe}
-              </p>
-
-              <p className="text-sm">{project.summary}</p>
-
-              {project.techStack.length > 0 && (
-                <ul className="mt-1 flex flex-wrap gap-2">
-                  {project.techStack.map((tech) => (
-                    <li
-                      key={tech}
-                      className="rounded-full border border-black/10 px-2 py-0.5 text-xs text-black/70 dark:border-white/10 dark:text-white/70"
-                    >
-                      {tech}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </article>
+          <h3 className="text-lg font-medium">{project.title}</h3>
+          <span className="text-sm text-black/60 dark:text-white/60">
+            {project.category}
+          </span>
         </Link>
       ))}
     </div>

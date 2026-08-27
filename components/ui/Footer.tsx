@@ -17,12 +17,11 @@ export default function Footer() {
       >
         franklin.yan.sarmiento@gmail.com
       </a>
-
       <div className="flex gap-6">
-        <a href="#" data-cursor-hover className="hover:text-black dark:hover:text-white">
+        <a href="https://github.com/var-franklin" data-cursor-hover className="hover:text-black dark:hover:text-white">
           [GitHub]
         </a>
-        <a href="#" data-cursor-hover className="hover:text-black dark:hover:text-white">
+        <a href="https://www.linkedin.com/in/franklinsarmiento/" data-cursor-hover className="hover:text-black dark:hover:text-white" target="_blank" rel="noopener noreferrer">
           [LinkedIn]
         </a>
       </div>

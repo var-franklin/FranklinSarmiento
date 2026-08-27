@@ -1,6 +1,6 @@
 # File Tree: franklinsarmiento
 
-**Generated:** 8/26/2026, 8:09:46 PM
+**Generated:** 8/27/2026, 1:17:40 PM
 **Root Path:** `d:\Program Files\Visual Studio Code\Projects\franklinsarmiento`
 
 ```
@@ -21,8 +21,9 @@
 │   │   └── SmoothScroll.tsx
 │   ├── sections
 │   │   ├── about
-│   │   │   ├── About.tsx
-│   │   │   └── page.tsx
+│   │   │   └── About.tsx
+│   │   ├── cta
+│   │   │   └── CTA.tsx
 │   │   ├── hero
 │   │   │   └── Hero.tsx
 │   │   └── projects
