@@ -7,21 +7,21 @@
  * The Footer's smaller link stays as a persistent fallback on every route,
  * including /projects and /projects/[slug], which don't render this
  * section at all.
+ *
+ * No subtext — headline + button only, matching the Hero's standalone,
+ * unexplained confidence rather than a headline/subtext/button structure.
  */
 export default function CTA() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-24 text-center">
-      <h2 className="text-3xl font-medium sm:text-4xl">[placeholder CTA headline]</h2>
-      <p className="mx-auto mt-4 max-w-md text-black/60 dark:text-white/60">
-        [placeholder CTA subtext]
-      </p>
+      <h2 className="text-3xl font-medium sm:text-4xl">Have something in mind?</h2>
 
       <a
         href="mailto:franklin.yan.sarmiento@gmail.com"
         data-cursor-hover
         className="mt-8 inline-block rounded-full border border-black/10 px-8 py-3 text-sm font-medium transition-colors hover:bg-black hover:text-white dark:border-white/10 dark:hover:bg-white dark:hover:text-black"
       >
-        Get in touch
+        Let&apos;s Talk.
       </a>
     </section>
   );
