@@ -9,19 +9,20 @@
  */
 export default function Footer() {
   return (
-    <footer className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-12 text-sm text-black/60 dark:text-white/60 sm:flex-row sm:items-center sm:justify-between">
-      <a
-        href="mailto:franklin.yan.sarmiento@gmail.com"
-        data-cursor-hover
-        className="hover:text-black dark:hover:text-white"
-      >
+    <footer>
+      <a href="mailto:franklin.yan.sarmiento@gmail.com" data-cursor-hover>
         franklin.yan.sarmiento@gmail.com
       </a>
-      <div className="flex gap-6">
-        <a href="https://github.com/var-franklin" data-cursor-hover className="hover:text-black dark:hover:text-white">
+      <div>
+        <a href="https://github.com/var-franklin" data-cursor-hover>
           [GitHub]
         </a>
-        <a href="https://www.linkedin.com/in/franklinsarmiento/" data-cursor-hover className="hover:text-black dark:hover:text-white" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://www.linkedin.com/in/franklinsarmiento/"
+          data-cursor-hover
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           [LinkedIn]
         </a>
       </div>

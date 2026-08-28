@@ -1,7 +1,7 @@
 //file path: app/layout.tsx
 
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 import GsapProvider from '@/components/providers/GsapProvider';
@@ -11,14 +11,13 @@ import HashScrollHandler from "@/components/providers/HashScrollHandler";
 import Nav from "@/components/ui/Nav";
 import Footer from "@/components/ui/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// design.md [CONFIRMED]: Plus Jakarta Sans, weights 400/500/600/700.
+// Self-hosted via next/font — no external request at runtime, no FOUT.
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-plus-jakarta-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -28,8 +27,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html lang="en" className={plusJakartaSans.variable}>
+      <body>
         <GsapProvider>
           <RouteChangeRefresh />
           <HashScrollHandler />

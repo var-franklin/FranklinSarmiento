@@ -13,14 +13,10 @@
  */
 export default function CTA() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-24 text-center">
-      <h2 className="text-3xl font-medium sm:text-4xl">Have something in mind?</h2>
+    <section>
+      <h2>Have something in mind?</h2>
 
-      <a
-        href="mailto:franklin.yan.sarmiento@gmail.com"
-        data-cursor-hover
-        className="mt-8 inline-block rounded-full border border-black/10 px-8 py-3 text-sm font-medium transition-colors hover:bg-black hover:text-white dark:border-white/10 dark:hover:bg-white dark:hover:text-black"
-      >
+      <a href="mailto:franklin.yan.sarmiento@gmail.com" data-cursor-hover>
         Let&apos;s Talk.
       </a>
     </section>

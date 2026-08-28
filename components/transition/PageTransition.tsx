@@ -43,11 +43,15 @@ export default function PageTransition({ children }: { children: React.ReactNode
 
   return (
     <>
+      {/* fixed/inset-0/z-[60]/translate-y-full kept: positioning and the
+          hidden starting state are required for the wipe timeline above to
+          have any visible effect. bg-black kept only because an overlay
+          with no fill is transparent, i.e. invisible — that would silently
+          disable the transition rather than just un-style it. */}
       <div
         ref={overlayRef}
         aria-hidden="true"
-        // className="pointer-events-none fixed inset-0 z-[60] translate-y-full bg-black"
-        className="pointer-events-none fixed inset-0 z-[60] translate-y-full bg-red-500"
+        className="pointer-events-none fixed inset-0 z-[60] translate-y-full bg-black"
       />
       {children}
     </>

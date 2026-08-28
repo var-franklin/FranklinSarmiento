@@ -12,10 +12,10 @@ export default function Home() {
 
       <About />
 
-      <section id="projects" className="mx-auto max-w-6xl px-6 py-24">
-        <h2 className="text-3xl font-medium">Projects</h2>
+      <section id="projects">
+        <h2>Projects</h2>
 
-        <div className="mt-10">
+        <div>
           <ProjectGrid />
         </div>
       </section>

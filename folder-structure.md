@@ -1,6 +1,6 @@
 # File Tree: franklinsarmiento
 
-**Generated:** 8/27/2026, 1:17:40 PM
+**Generated:** 8/27/2026, 6:59:40 PM
 **Root Path:** `d:\Program Files\Visual Studio Code\Projects\franklinsarmiento`
 
 ```
@@ -17,6 +17,7 @@
 ├── components
 │   ├── providers
 │   │   ├── GsapProvider.tsx
+│   │   ├── HashScrollHandler.tsx
 │   │   ├── RouteChangeRefresh.tsx
 │   │   └── SmoothScroll.tsx
 │   ├── sections
@@ -35,7 +36,8 @@
 │       ├── Footer.tsx
 │       └── Nav.tsx
 ├── lib
-│   └── projects.ts
+│   ├── projects.ts
+│   └── scrollToSection.ts
 ├── public
 │   ├── images
 │   │   ├── personal

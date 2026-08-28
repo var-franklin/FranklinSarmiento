@@ -51,10 +51,14 @@ export default function Cursor() {
   });
 
   return (
+    // h-3/w-3/bg-black kept: without a size and a fill color this element
+    // is literally invisible, which would silently disable the whole
+    // custom-cursor feature rather than just "un-style" it. Shape
+    // (rounded-full) and blend mode were dropped as pure decoration.
     <div
       ref={cursorRef}
       aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-[100] h-3 w-3 rounded-full bg-white opacity-0 mix-blend-difference"
+      className="pointer-events-none fixed left-0 top-0 z-[100] h-3 w-3 bg-black opacity-0"
     />
   );
 }

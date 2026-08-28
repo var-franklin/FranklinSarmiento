@@ -61,18 +61,19 @@ export default function ProjectGrid() {
   );
 
   return (
-    <div ref={listRef} className="flex flex-col border-t border-black/10 dark:border-white/10">
+    <div ref={listRef}>
       {projects.map((project) => (
+        // opacity-0/translate-y-8 kept: this is the hidden starting state
+        // the scroll-reveal animation above animates away from — removing
+        // it would silently disable the reveal effect, not just its look.
         <Link
           key={project.slug}
           href={`/projects/${project.slug}`}
           data-cursor-hover
-          className="flex translate-y-8 items-center justify-between gap-6 border-b border-black/10 py-6 opacity-0 dark:border-white/10"
+          className="translate-y-8 opacity-0"
         >
-          <h3 className="text-lg font-medium">{project.title}</h3>
-          <span className="text-sm text-black/60 dark:text-white/60">
-            {project.category}
-          </span>
+          <h3>{project.title}</h3>
+          <span>{project.category}</span>
         </Link>
       ))}
     </div>

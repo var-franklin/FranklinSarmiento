@@ -57,14 +57,14 @@ export default function Nav() {
   });
 
   return (
-    <nav
-      ref={navRef}
-      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-4 transition-colors data-[scrolled=true]:backdrop-blur-md"
-    >
-      <Link href="/" data-cursor-hover className="font-medium">
+    // fixed/inset-x-0/top-0/z-50 kept: the hide-on-scroll animation above
+    // translates this element via yPercent, which only has a visible
+    // effect if the nav is taken out of normal document flow.
+    <nav ref={navRef} className="fixed inset-x-0 top-0 z-50">
+      <Link href="/" data-cursor-hover>
         Franklin Sarmiento
       </Link>
-      <ul className="flex gap-6">
+      <ul>
         {LINKS.map((link) => {
           const isActive = link.sectionId ? false : pathname === link.href;
 
@@ -85,7 +85,6 @@ export default function Nav() {
                 scroll={!link.sectionId}
                 onClick={handleClick}
                 aria-current={isActive ? 'page' : undefined}
-                className={isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100'}
               >
                 {link.label}
               </Link>
