@@ -2,41 +2,18 @@
 
 @import "tailwindcss";
 
-/* ============================================================
-   DESIGN TOKENS — sourced from franklinsarmiento-DESIGN.md
-
-   TOKENS-ONLY PASS: this file implements the doc's color and
-   type-scale decisions. Components haven't been restyled yet — none
-   of them reference these utilities. Per-component sizing (nav
-   height, button/card padding, etc.) stays out of scope here; the
-   doc itself defers those to when each component gets built, and
-   this pass doesn't touch component code.
-
-   Status labels below are carried over VERBATIM from the doc's own
-   Decided/Proposed table — nothing here is invented beyond what the
-   doc already states:
-     Decided  — explicitly confirmed in the design conversation.
-     Proposed — a reasonable default inherited from the Mehdi
-                Bouayaben reference, not yet separately confirmed.
-                Treat as a starting point, not locked.
-   ============================================================ */
 
 @theme {
-  /* ---- Type family [Decided] ----
-     var(--font-plus-jakarta-sans) is supplied by next/font/google in
-     app/layout.tsx (self-hosted, no external request at runtime). */
-  --font-sans: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui,
-    sans-serif;
+  /* Inter — body copy, nav, labels, subline, intro eyebrow/loading text. */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  /* ---- Type scale [Proposed] ----
-     Method (fluid clamp()) and typeface are Decided. The specific
-     clamp() ranges/weights/letter-spacing below are Mehdi's calibrated
-     numbers, carried over as-is — tuned for Archivo Variable's
-     proportions, not Plus Jakarta Sans's. The doc flags these as
-     needing a visual check in-browser with real headline copy before
-     treating as final. Names match the doc's type-role names exactly
-     (display-hero, display-section, etc.) instead of a generic
-     h1/h2/h3 scale, so the mapping back to the doc stays unambiguous. */
+  /* Big Shoulders Display — hero headline + intro counter ONLY.
+     Added because Hero.tsx and IntroSplash.tsx already reference a
+     `font-display` utility class; without this token that class
+     generates no CSS and both fall back to --font-sans silently. */
+  --font-display: var(--font-big-shoulders-display), ui-sans-serif,
+    system-ui, sans-serif;
+
   --text-display-hero: clamp(3.2rem, 1.2rem + 10.5vw, 9rem);
   --text-display-hero--line-height: 0.95;
   --text-display-hero--font-weight: 600;
@@ -69,44 +46,24 @@
   --text-nav-link--font-weight: 500;
   --text-nav-link--letter-spacing: 0.12em;
 
-  /* ---- Spacing [Decided] : 8px grid, adopted wholesale from the doc ----
-     Unchanged from before this pass — values already matched the doc
-     exactly. Renamed --spacing-section → --spacing-section-spacing
-     only, to match the doc's own key ("section-spacing") 1:1. Any step
-     not listed here (5, 7, 9, 10...) intentionally stays on Tailwind's
-     default scale, since the doc doesn't define one. */
-  --spacing-1: 0.5rem;   /* 8px */
-  --spacing-2: 1rem;     /* 16px */
-  --spacing-3: 1.5rem;   /* 24px */
-  --spacing-4: 2rem;     /* 32px */
-  --spacing-6: 3rem;     /* 48px */
-  --spacing-8: 4rem;     /* 64px */
-  --spacing-12: 6rem;    /* 96px */
-  --spacing-16: 8rem;    /* 128px */
+  --spacing-1: 0.5rem;
+  --spacing-2: 1rem;
+  --spacing-3: 1.5rem;
+  --spacing-4: 2rem;
+  --spacing-6: 3rem;
+  --spacing-8: 4rem;
+  --spacing-12: 6rem;
+  --spacing-16: 8rem;
   --spacing-gutter: clamp(1.25rem, 4.5vw, 4.5rem);
   --spacing-section-spacing: clamp(6rem, 14vw, 13rem);
 
-  /* ---- Shape [Decided] : sharp by default, pill is the one exception ----
-     Tailwind's own rounded-none (0px) and rounded-full (9999px) already
-     cover this exactly — no custom radius tokens needed. */
-
-  /* ---- Color ----
-     background-base / accent-amber = [Decided].
-     ink / background-elevated / ink-dim / ink-faint / line = [Proposed]
-     — inherited from the Mehdi reference, not separately confirmed.
-     Doc's own contrast check: accent-amber on background-base = 10.83:1
-     (WCAG AAA), ink on background-base = 17.48:1. */
   --color-background-base: #0a0a0a;
-  --color-background-elevated: #121110;
+  --color-background-elevated: #1c1c1c;
   --color-ink: #f5f0eb;
-  /* ink-dim/ink-faint/line are ink at ~55%/~30%/~14% opacity per the
-     doc's prose. (Its YAML frontmatter repeats the same solid hex for
-     all three — a frontmatter limitation, no alpha syntax there — not
-     the actual intent described in the doc's body/table.) */
-  --color-ink-dim: rgb(245 240 235 / 0.55);
-  --color-ink-faint: rgb(245 240 235 / 0.3);
-  --color-line: rgb(245 240 235 / 0.14);
-  --color-accent-amber: #ffb020;
+  --color-ink-secondary: #8b8886;
+  --color-ink-tertiary: #7a7876;
+  --color-ink-ghost: rgb(245 240 235 / 0.08);
+  --color-line: rgb(245 240 235 / 0.2);
 }
 
 /* ---- Base element defaults ---- */
@@ -120,10 +77,7 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Visible keyboard focus, kept independent of the amber-restraint rule
-   ("one amber-filled element as the most important action per view")
-   since focus states are a functional affordance, not decoration. */
 :focus-visible {
-  outline: 2px solid var(--color-accent-amber);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
 }
