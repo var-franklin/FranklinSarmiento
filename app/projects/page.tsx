@@ -1,6 +1,6 @@
 //file path: app/projects/page.tsx
 
-import ProjectGrid from '@/components/sections/projects/ProjectGrid';
+import ProjectGrid from '@/components/sections/projects/Project';
 
 export default function ProjectsPage() {
   return (

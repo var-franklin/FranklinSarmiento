@@ -2,7 +2,7 @@
 
 import Hero from '@/components/sections/hero/Hero';
 import About from '@/components/sections/about/About';
-import ProjectGrid from '@/components/sections/projects/ProjectGrid';
+import ProjectGrid from '@/components/sections/projects/Project';
 import CTA from '@/components/sections/cta/CTA';
 
 export default function Home() {

@@ -64,6 +64,9 @@
   --color-ink-tertiary: #7a7876;
   --color-ink-ghost: rgb(245 240 235 / 0.08);
   --color-line: rgb(245 240 235 / 0.2);
+  /* Hover-arrow accent only — Mehdi Bouayaben's reference value, reused
+     verbatim. Not used anywhere else in the UI. */
+  --color-accent: #ff5c28;
 }
 
 /* ---- Base element defaults ---- */

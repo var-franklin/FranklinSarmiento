@@ -10,6 +10,14 @@ export interface Project {
   // homepage project list (e.g. "POS System") — distinct from `summary`
   // below, which is a full sentence not currently rendered anywhere in
   // the UI but kept around for possible future use (e.g. meta description).
+  org: string; // organization or context behind the project — a client
+  // name, an institution, or "Personal Project"/"Undergraduate Thesis"
+  // for self-directed work; shown next to `category` in the homepage
+  // list's right-aligned meta cluster (e.g. "Lucas Feeds & Poultry
+  // Supplies · POS System").
+  year: string; // display year or year range for the same meta cluster
+  // (e.g. "2024–25"); an em dash ("—") where the timeframe is genuinely
+  // unknown rather than a guessed date — see `bababook` below.
   summary: string; // 1-line, for grid cards
   description: string; // longer case-study body
   highlights: string[]; // Problem / Approach / Result
@@ -34,6 +42,8 @@ export const projects: Project[] = [
     timeframe: 'Jun 2025 – May 2026',
     techStack: ['React', 'Node.js', 'Express', 'MySQL', 'Tailwind CSS', 'Draco'],
     category: '3D Training Simulator',
+    org: 'Undergraduate Thesis',
+    year: '2025–26',
     summary:
       'An undergraduate thesis project simulating fish deboning in 3D, with FSM-driven validation, gamified training, and instructor analytics — independently validated at 4.94/5.',
     description:
@@ -64,6 +74,8 @@ export const projects: Project[] = [
     timeframe: 'Sep 2024 – Jan 2025',
     techStack: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Chart.js', 'FullCalendar'],
     category: 'POS System',
+    org: 'Lucas Feeds & Poultry Supplies',
+    year: '2024–25',
     summary:
       'A commissioned MERN point-of-sale system for a poultry and feed supplier, with live digital-scale integration for weight-based pricing and automated low-stock alerts.',
     description:
@@ -96,6 +108,8 @@ export const projects: Project[] = [
     timeframe: 'Unknown — no dates found on resume or GitHub',
     techStack: ['React 19', 'Vite', 'Express', 'MongoDB', 'Tailwind CSS', 'Leaflet', 'Google Books API'],
     category: 'E-Book Library Platform',
+    org: 'Personal Project',
+    year: '—',
     summary:
       'A three-role e-book library platform combining a public book catalog with real library borrowing workflows, library discovery on an interactive map, and reading-progress tracking.',
     description:
@@ -123,6 +137,8 @@ export const projects: Project[] = [
     timeframe: 'Jul 2025 – Aug 2025',
     techStack: ['PHP', 'JavaScript'],
     category: 'Document Management System',
+    org: 'Cavite State University – Naic Campus',
+    year: '2025',
     summary:
       "A centralized document management platform I led development of during my IT internship, deployed across six departments at my university's Naic campus.",
     description:
@@ -152,6 +168,8 @@ export const projects: Project[] = [
     timeframe: 'Jan 2025',
     techStack: ['React', 'Vite', 'Node.js', 'Express', 'MongoDB', 'CSS'],
     category: 'Lab Equipment System',
+    org: 'Manuel S. Enverga University Foundation',
+    year: '2025',
     summary:
       'A commissioned MERN system for tracking school lab equipment — availability, room assignment, and maintenance status — in real time across three roles.',
     description:
