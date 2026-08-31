@@ -5,7 +5,13 @@ import Image from 'next/image';
 export default function About() {
   return (
     <section id="about">
-      <h2>About</h2>
+      {/* Was a bare <h2> with no size/weight class at all — under
+          Tailwind's preflight reset that renders identically to body
+          text, so this heading had no visual hierarchy before. Added
+          `text-display-section`, the same scale CTA's closing heading
+          now uses, so the two top-level section headings read
+          consistently. */}
+      <h2 className="text-display-section">About</h2>
 
       {/* relative + aspect-ratio kept: next/image `fill` requires a
           positioned, sized parent to render at all. */}
@@ -57,30 +63,36 @@ export default function About() {
              confirmed they should count as claimed skills.
         Education directly below is untouched — still a placeholder,
         out of scope for this change.
+
+        Font: the field-name spans below ("Languages:", "Frameworks &
+        Libraries:", etc.) get `font-mono` — they're the same label-tier
+        text as the site's eyebrows/nav links/meta text, just set inline
+        instead of standalone. The values after each label stay on the
+        default Geist Sans (no class needed, inherited from <body>).
       */}
-      <h3>Tech Stack</h3>
+      <h3 className="text-display-medium">Tech Stack</h3>
       <div>
         <p>
-          <span>Languages:</span> JavaScript,
+          <span className="font-mono">Languages:</span> JavaScript,
           TypeScript, Java, Python, PHP, SQL, HTML5, CSS3
         </p>
         <p>
-          <span>Frameworks &amp; Libraries:</span>{' '}
+          <span className="font-mono">Frameworks &amp; Libraries:</span>{' '}
           React, Next.js, Node.js, Express.js, GSAP, Tailwind CSS,
           Bootstrap, Vite, Chart.js, FullCalendar
         </p>
         <p>
-          <span>Databases:</span> MySQL, MongoDB,
+          <span className="font-mono">Databases:</span> MySQL, MongoDB,
           Oracle
         </p>
         <p>
-          <span>Tools &amp; Platforms:</span> Git
+          <span className="font-mono">Tools &amp; Platforms:</span> Git
           &amp; GitHub, VS Code, XAMPP, Postman, Apache, NodeMon, RESTful
           APIs &amp; AJAX, JWT/OAuth, Draco, Cisco Packet Tracer,
           SketchUp, WordPress
         </p>
         <p>
-          <span>Cloud &amp; Hosting:</span>{' '}
+          <span className="font-mono">Cloud &amp; Hosting:</span>{' '}
           Vercel, Firebase, Google Cloud
         </p>
       </div>
@@ -97,17 +109,17 @@ export default function About() {
           - Dean's Lister (2022–2026) and expected graduation date
             omitted per explicit instruction — honors line only.
       */}
-      <h3>Education</h3>
+      <h3 className="text-display-medium">Education</h3>
       <div>
         <p>
-          <span>Institution:</span> Cavite State
+          <span className="font-mono">Institution:</span> Cavite State
           University
         </p>
         <p>
-          <span>Degree:</span> BS Computer Science
+          <span className="font-mono">Degree:</span> BS Computer Science
         </p>
         <p>
-          <span>Honors:</span> Magna Cum Laude
+          <span className="font-mono">Honors:</span> Magna Cum Laude
         </p>
       </div>
       <a href="/resume.pdf" data-cursor-hover download>

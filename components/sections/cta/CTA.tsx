@@ -10,11 +10,16 @@
  *
  * No subtext — headline + button only, matching the Hero's standalone,
  * unexplained confidence rather than a headline/subtext/button structure.
+ *
+ * Font: `text-display-section` added to the heading below — it had no
+ * size/weight class at all before, so despite being a closing headline it
+ * was rendering at plain body scale. Matches the scale About's top-level
+ * heading now uses, so both major section headings read consistently.
  */
 export default function CTA() {
   return (
     <section>
-      <h2>Have something in mind?</h2>
+      <h2 className="text-display-section">Have something in mind?</h2>
 
       <a href="mailto:franklin.yan.sarmiento@gmail.com" data-cursor-hover>
         Let&apos;s Talk.

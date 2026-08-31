@@ -180,7 +180,15 @@ export default function Nav() {
           one is ever in the DOM's accessibility tree at a time — "FS" is a
           space-constrained mobile fallback, not new content. Both carry
           introTarget: IntroSplash finds whichever one is actually visible
-          (offsetParent !== null) and Flips onto that one. */}
+          (offsetParent !== null) and Flips onto that one.
+
+          Font: deliberately NOT font-mono. This is the site's wordmark,
+          not label-tier text — it sits on text-body-regular with
+          tracking-tight, the opposite letter-spacing of the tracked
+          label tokens (text-label-uppercase / text-nav-link) that get
+          font-mono elsewhere. Stays on the default Geist Sans. This is a
+          judgment call, not a rule stated in the baseline doc — flag it
+          if you want it mono'd for full-brand consistency instead. */}
       <NavAnchor
         href="/"
         label="Franklin Sarmiento"
@@ -209,13 +217,19 @@ export default function Nav() {
 
           return (
             <li key={link.href}>
+              {/* Font: text-nav-link is the same label-tier spec as
+                  text-label-uppercase (13px, letter-spacing 0.12em) —
+                  gets font-mono to match every other label-tier element
+                  on the site (eyebrows, index numbers, meta text, the
+                  IntroSplash labels). This was the one label-tier spot
+                  still on the default Geist Sans. */}
               <NavAnchor
                 href={link.href}
                 label={link.label}
                 scroll={!link.sectionId}
                 onClick={handleClick}
                 isActive={isActive}
-                className="text-nav-link uppercase text-ink-secondary transition-colors duration-[250ms] ease-out hover:text-ink focus-visible:text-ink"
+                className="font-mono text-nav-link uppercase text-ink-secondary transition-colors duration-[250ms] ease-out hover:text-ink focus-visible:text-ink"
               />
             </li>
           );

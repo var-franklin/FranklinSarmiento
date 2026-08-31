@@ -36,6 +36,16 @@ export function introHasPlayed() {
  * Skip button: a <noscript> rule that hides it outright with scripting
  * off, and a pure-CSS @keyframes failsafe that forces it invisible after a
  * generous delay if GSAP throws or never fires with scripting on.
+ *
+ * Font: this file previously referenced `.font-display`, a token that no
+ * longer exists (Big Shoulders Display was replaced by a single Geist
+ * Sans / Geist Mono system — see globals.css). That dead reference on the
+ * percentage counter is removed below. Separately, the four label-tier
+ * text elements here (site name, role placeholder, "Loading", skip
+ * button) now carry `font-mono`, matching every other label-tier element
+ * on the site (Hero's "Scroll" label, About's field-name spans, Project's
+ * eyebrow/index/meta) — this file was the one place that was still on the
+ * default Geist Sans for that tier.
  */
 
 const COUNTER_DURATION = 1.5;
@@ -178,17 +188,21 @@ export default function IntroSplash() {
         aria-hidden="true"
         className="fixed left-gutter right-gutter top-gutter flex justify-between"
       >
-        {/* Real — from Nav.tsx. */}
-        <span className="text-label-uppercase uppercase text-ink">Franklin Sarmiento</span>
+        {/* Real — from Nav.tsx. Label-tier text: font-mono. */}
+        <span className="font-mono text-label-uppercase uppercase text-ink">
+          Franklin Sarmiento
+        </span>
         {/* Placeholder — fill in your role/discipline line. */}
-        <span className="text-label-uppercase uppercase text-ink">[ ROLE / DISCIPLINE ]</span>
+        <span className="font-mono text-label-uppercase uppercase text-ink">
+          [ ROLE / DISCIPLINE ]
+        </span>
       </div>
 
       <button
         ref={skipBtnRef}
         type="button"
         onClick={skip}
-        className="fixed bottom-gutter right-gutter z-10 inline-flex items-center gap-1 border border-ink-ghost px-2 py-1 text-label-uppercase uppercase text-ink transition-[border-color,transform] duration-200 ease-out hover:-translate-y-px hover:border-ink active:translate-y-0"
+        className="fixed bottom-gutter right-gutter z-10 inline-flex items-center gap-1 border border-ink-ghost px-2 py-1 font-mono text-label-uppercase uppercase text-ink transition-[border-color,transform] duration-200 ease-out hover:-translate-y-px hover:border-ink active:translate-y-0"
       >
         <span aria-hidden="true" className="inline-block h-1.5 w-1.5 bg-ink" />
         <span>Skip intro</span>
@@ -196,12 +210,12 @@ export default function IntroSplash() {
 
       <div className="overflow-hidden">
         <div ref={loaderRef} className="flex flex-col gap-2">
-          <p aria-hidden="true" className="text-label-uppercase uppercase text-ink">
+          <p aria-hidden="true" className="font-mono text-label-uppercase uppercase text-ink">
             Loading
           </p>
           <div
             aria-hidden="true"
-            className="flex items-end gap-1 font-display text-display-medium font-light leading-none tabular-nums text-ink"
+            className="flex items-end gap-1 text-display-medium font-light leading-none tabular-nums text-ink"
           >
             <span ref={counterNumRef}>0</span>
             <span className="pb-[0.35em] font-sans text-body-regular text-ink">%</span>

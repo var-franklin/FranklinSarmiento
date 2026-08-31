@@ -88,12 +88,18 @@ export default function Hero() {
           this once, cleanly, regardless of whether the entrance animation
           ever runs. tabIndex/outline handling is for the programmatic
           focus() call above, not for mouse/click interaction — outline
-          only reappears for genuine keyboard focus. */}
+          only reappears for genuine keyboard focus.
+
+          Font: no `font-display` class here anymore — Geist Sans is now
+          the site's only heading/body family (see globals.css), so this
+          just inherits it from <body>. `text-display-hero` still carries
+          the size/line-height/weight for this element; that part is
+          untouched. */}
       <h1
         ref={headingRef}
         tabIndex={-1}
         aria-label="Franklin Sarmiento"
-        className="font-display text-display-hero uppercase leading-none text-ink outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink focus-visible:outline-offset-4"
+        className="text-display-hero uppercase leading-none text-ink outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-ink focus-visible:outline-offset-4"
       >
         <span className="block overflow-hidden pb-[0.06em]" aria-hidden="true">
           <span className="hero-line block">Franklin</span>
@@ -113,9 +119,12 @@ export default function Hero() {
 
       <div className="fixed bottom-gutter right-gutter flex flex-col items-center gap-1">
         <div className="overflow-hidden">
+          {/* Label-tier text — gets `font-mono` (Geist Mono) per the
+              site's "mono for labels" rule. Everything else in this file
+              stays on the default Geist Sans. */}
           <span
             aria-hidden="true"
-            className="hero-scroll-label block text-label-uppercase uppercase text-ink [writing-mode:vertical-rl]"
+            className="hero-scroll-label block font-mono text-label-uppercase uppercase text-ink [writing-mode:vertical-rl]"
           >
             Scroll
           </span>

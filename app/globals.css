@@ -4,15 +4,22 @@
 
 
 @theme {
-  /* Inter — body copy, nav, labels, subline, intro eyebrow/loading text. */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Geist Sans — the single type family for the whole site: headings,
+     body copy, nav, labels, subline, intro text, everything that isn't
+     explicitly called out as a label/meta element below. Replaces the
+     previous two-family split (Big Shoulders Display for the hero only,
+     Inter for everything else) — that split left every heading except
+     the hero silently falling back to Inter, which is the inconsistency
+     this consolidation fixes. */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 
-  /* Big Shoulders Display — hero headline + intro counter ONLY.
-     Added because Hero.tsx and IntroSplash.tsx already reference a
-     `font-display` utility class; without this token that class
-     generates no CSS and both fall back to --font-sans silently. */
-  --font-display: var(--font-big-shoulders-display), ui-sans-serif,
-    system-ui, sans-serif;
+  /* Geist Mono — reserved for the small, tracked "label" tier only:
+     eyebrows, nav links, project index numbers, meta text (org /
+     category / year), and the Tech Stack / Education field labels in
+     About.tsx. Applied via the `font-mono` utility directly on those
+     elements — never used for body copy or headings. */
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
 
   --text-display-hero: clamp(3.2rem, 1.2rem + 10.5vw, 9rem);
   --text-display-hero--line-height: 0.95;
@@ -64,8 +71,6 @@
   --color-ink-tertiary: #7a7876;
   --color-ink-ghost: rgb(245 240 235 / 0.08);
   --color-line: rgb(245 240 235 / 0.2);
-  /* Hover-arrow accent only — Mehdi Bouayaben's reference value, reused
-     verbatim. Not used anywhere else in the UI. */
   --color-accent: #ff5c28;
 }
 

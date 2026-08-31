@@ -1,7 +1,7 @@
 //file path: app/layout.tsx
 
 import type { Metadata } from "next";
-import { Big_Shoulders, Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import GsapProvider from '@/components/providers/GsapProvider';
@@ -13,28 +13,40 @@ import IntroSplash from "@/components/transition/IntroSplash";
 import Nav from "@/components/ui/Nav";
 import Footer from "@/components/ui/Footer";
 
-// obsidian-intro.html preset [APPLIED]: two typefaces, replacing the prior
-// single-typeface (Plus Jakarta Sans) system per Franklin's explicit
-// instruction — see CHANGE-NOTES.md.
+// Typography system, replacing the prior two-family split (Big Shoulders
+// Display for the hero only, Inter for everything else).
 //
-// Big Shoulders Display: condensed display face, used ONLY for the hero
-// headline and the intro's percentage counter (weight 300/Light in both,
-// matching the reference). Weights 300/400/600 kept available in case a
-// heavier cut is wanted later for either spot.
-const bigShouldersDisplay = Big_Shoulders({
+// That split left every heading except the hero silently falling back to
+// Inter, because `.font-display` was only ever wired into Hero.tsx. Fix:
+// one family for the whole site instead of two half-applied ones.
+//
+// Geist Sans: the single family for headings AND body copy — nav, labels,
+// subline, About/CTA/Project headings, everything. Loaded via
+// next/font/google (not the separate `geist` npm package) to stay
+// consistent with how Big Shoulders/Inter were already loaded here, and
+// so no new dependency is needed in package.json.
+//
+// No `weight` option passed on either font below — both Geist Sans and
+// Geist Mono are variable fonts on Google Fonts, so omitting `weight`
+// loads the full variable range in a single file rather than several
+// static-weight files. Tailwind's font-weight utilities (font-medium,
+// font-semibold, etc.) and the bundled weights on the `text-display-*`
+// tokens in globals.css work correctly against that full range without
+// any extra config here.
+const geistSans = Geist({
   subsets: ["latin"],
-  weight: "variable",
-  axes: ["opsz"],
-  variable: "--font-big-shoulders-display",
+  variable: "--font-geist-sans",
   display: "swap",
 });
 
-// Inter: the workhorse face for everything else — nav, body copy, labels,
-// the hero subline, the intro's loading/eyebrow text.
-const inter = Inter({
+// Geist Mono: NOT a second display face. Reserved exclusively for the
+// small, tracked "label" tier — eyebrows, nav links, project index
+// numbers, meta text, and the Tech Stack/Education field labels in
+// About.tsx. Applied via the `font-mono` utility directly on those
+// elements. See globals.css for the `--font-mono` token this feeds.
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-inter",
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
@@ -47,20 +59,34 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${bigShouldersDisplay.variable} ${inter.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body>
         <GsapProvider>
           {/* Mounted once per real document load, not per client-side nav —
               see IntroSplash.tsx's module-scope flag for why that's exactly
               the persistence this needs. Fixed/full-bleed, so its position
-              in this tree doesn't matter for paint order. */}
+              in this tree doesn't matter for paint order.
+
+              IntroSplash.tsx's dead `font-display` reference (on the
+              percentage counter) has been removed, and its label-tier
+              text (site name, role placeholder, "Loading" label, skip
+              button) now carries `font-mono`, consistent with every
+              other label-tier element on the site. */}
           <IntroSplash />
           {/* Mounted once, persists for the whole session. Renders nothing
               visible until IntroSplash's caret hands off to it — see
               CURSOR_HANDOFF_EVENT in IntroSplash.tsx. Replaces the old,
               never-mounted Cursor.tsx (safe to delete that file now).
-              
+
+              NOTE: CursorTrail.tsx currently imports CURSOR_HANDOFF_EVENT
+              from IntroSplash.tsx, but IntroSplash.tsx does not export
+              anything by that name (only INTRO_COMPLETE_EVENT and
+              introHasPlayed). Left commented out below for that reason —
+              uncommenting this as-is will not compile. Needs either the
+              handoff event/Flip logic actually built in IntroSplash.tsx,
+              or this component removed.
+
           <CursorTrail />
            */}
           

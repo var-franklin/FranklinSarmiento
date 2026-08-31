@@ -1,6 +1,6 @@
 # File Tree: franklinsarmiento
 
-**Generated:** 8/27/2026, 6:59:40 PM
+**Generated:** 8/31/2026, 9:43:58 AM
 **Root Path:** `d:\Program Files\Visual Studio Code\Projects\franklinsarmiento`
 
 ```
@@ -28,11 +28,12 @@
 │   │   ├── hero
 │   │   │   └── Hero.tsx
 │   │   └── projects
-│   │       └── ProjectGrid.tsx
+│   │       └── Project.tsx
 │   ├── transition
+│   │   ├── IntroSplash.tsx
 │   │   └── PageTransition.tsx
 │   └── ui
-│       ├── Cursor.tsx
+│       ├── CursorTrail.tsx
 │       ├── Footer.tsx
 │       └── Nav.tsx
 ├── lib

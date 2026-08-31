@@ -1,4 +1,4 @@
-//file path: components/sections/projects/ProjectGrid.tsx
+//file path: components/sections/projects/Project.tsx
 
 'use client';
 
@@ -32,10 +32,34 @@ import { projects } from '@/lib/projects';
  * row's own padding-bottom is already "spent" above its divider, not
  * below it. That means the header must NOT carry its own margin-bottom
  * after its divider: doing so stacks an extra gap on top of row 1's own
- * pt-6/pt-8 and makes the header→row1 gap visibly bigger than every other
+ * pt-* and makes the header→row1 gap visibly bigger than every other
  * row→row gap (this was tried once and was wrong — don't reintroduce it).
  * The header's divider relies solely on row 1's own top padding, exactly
  * like every other row relies solely on the next row's own top padding.
+ *
+ * Row vertical rhythm is controlled ENTIRELY by the Link's py-* classes
+ * below (py-4 / sm:py-6) — the outer <div data-row> that carries the
+ * border-b has no padding of its own, so row height = py-* + the title's
+ * line-height. Stepped down from py-6/sm:py-8 (too tall against
+ * text-display-medium's line-height) to py-4/sm:py-6, staying on the
+ * project's existing --spacing-* token scale rather than an off-scale
+ * value like py-5/py-7 (those aren't defined in globals.css's @theme
+ * block and would silently fall back to Tailwind's unscaled default,
+ * breaking the 2x-multiplier pattern the rest of the scale follows).
+ *
+ * Horizontal inset (px-2 / sm:px-4) works the same way: because border-b
+ * lives on the unpadded outer <div data-row>, adding px-* to the Link
+ * pulls the index number and the arrow in from the divider's actual
+ * start/end points without shrinking the line itself. This intentionally
+ * puts the row content out of column alignment with the eyebrow header
+ * above (PROJECTS / count), since that header has no inset of its own —
+ * if that misalignment needs fixing, the header needs the same
+ * outer-border / inner-padding split the rows already have.
+ *
+ * Font: the eyebrow header, row index numbers, and org/category/year meta
+ * all get `font-mono` (Geist Mono) — they're the site's label tier. The
+ * project title itself (`data-row-title`) stays on the default Geist Sans
+ * (headings never get `font-mono`), sized via `text-display-medium`.
  */
 export default function ProjectGrid() {
   const listRef = useRef<HTMLDivElement>(null);
@@ -148,8 +172,10 @@ export default function ProjectGrid() {
           so it can never drift out of sync with the data. An <h2> (not a
           <span>) so the section keeps a real heading now that
           app/page.tsx's own <h2>Projects</h2> has been removed to avoid a
-          duplicate label. */}
-      <div className="flex items-baseline justify-between border-b border-line pb-2">
+          duplicate label. `font-mono` on the wrapper: both the label and
+          the count are label-tier text, so it's applied once here and
+          inherits down instead of being repeated on each child. */}
+      <div className="flex items-baseline justify-between border-b border-line pb-2 font-mono">
         <h2 className="text-label-uppercase uppercase text-ink-secondary">
           Projects
         </h2>
@@ -173,9 +199,9 @@ export default function ProjectGrid() {
             data-cursor-hover
             onPointerEnter={() => handleRowEnter(project.slug)}
             onPointerLeave={() => handleRowLeave(project.slug)}
-            className="flex flex-col gap-3 py-6 sm:flex-row sm:items-center sm:gap-gutter sm:py-8"
+            className="flex flex-col gap-3 px-2 py-4 sm:flex-row sm:items-center sm:gap-gutter sm:px-4 sm:py-6"
           >
-            <span className="text-label-uppercase text-ink-tertiary sm:w-12 sm:shrink-0">
+            <span className="font-mono text-label-uppercase text-ink-tertiary sm:w-12 sm:shrink-0">
               {String(i + 1).padStart(2, '0')}
             </span>
 
@@ -184,7 +210,7 @@ export default function ProjectGrid() {
             </h3>
 
             <div className="flex items-center gap-4 sm:shrink-0">
-              <div className="text-right">
+              <div className="text-right font-mono">
                 <div className="text-label-uppercase uppercase text-ink-secondary">
                   {project.org} · {project.category}
                 </div>
