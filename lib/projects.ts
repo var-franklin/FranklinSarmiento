@@ -26,6 +26,10 @@ export interface Project {
   screenshots: string[]; // real screenshots where they exist; a commented
   // stand-in photo where they don't yet — every project keeps at least one
   // entry so card rendering never has to branch on an empty array
+  trailImages: string[]; // 3 placeholder images used by the hover-trail
+  // effect on the homepage project list. Swap for real crops/stills once
+  // available — kept separate from `screenshots` so the two can change
+  // independently.
   videoUrl?: string;
   // CvSUHimay and SupplyNest are the two featured on the home page — the
   // stronger technical story and the real-client story, respectively.
@@ -64,6 +68,11 @@ export const projects: Project[] = [
       // cvsuhimay-1.png intentionally excluded — confirmed a duplicate of
       // -01-overview.png, not a sixth distinct screenshot.
     ],
+    trailImages: [
+      '/images/trail/cvsuhimay/image1placeholder.jpg',
+      '/images/trail/cvsuhimay/image2placeholder.jpg',
+      '/images/trail/cvsuhimay/image3placeholder.jpg',
+    ],
     videoUrl: undefined,
     featured: true,
   },
@@ -97,6 +106,11 @@ export const projects: Project[] = [
       // for this project exist yet. Swap for actual screenshots and delete
       // this comment once they're added.
     ],
+    trailImages: [
+      '/images/trail/supplynest/image1placeholder.jpg',
+      '/images/trail/supplynest/image2placeholder.jpg',
+      '/images/trail/supplynest/image3placeholder.jpg',
+    ],
     videoUrl: undefined,
     featured: true,
   },
@@ -127,6 +141,11 @@ export const projects: Project[] = [
       // this project exist yet. Swap for actual screenshots and delete this
       // comment once they're added.
     ],
+    trailImages: [
+      '/images/trail/bababook/image1placeholder.jpg',
+      '/images/trail/bababook/image2placeholder.jpg',
+      '/images/trail/bababook/image3placeholder.jpg',
+    ],
     videoUrl: undefined,
     featured: false,
   },
@@ -137,7 +156,7 @@ export const projects: Project[] = [
     timeframe: 'Jul 2025 – Aug 2025',
     techStack: ['PHP', 'JavaScript'],
     category: 'Document Management System',
-    org: 'Cavite State University – Naic Campus',
+    org: 'Cavite State University',
     year: '2025',
     summary:
       "A centralized document management platform I led development of during my IT internship, deployed across six departments at my university's Naic campus.",
@@ -157,6 +176,11 @@ export const projects: Project[] = [
       '/images/projects/odci-04-social-feed.png',
       '/images/projects/odci-05-tracker.png',
       '/images/projects/odci-06-admin-dashboard.png',
+    ],
+    trailImages: [
+      '/images/trail/odci-record-management/image1placeholder.jpg',
+      '/images/trail/odci-record-management/image2placeholder.jpg',
+      '/images/trail/odci-record-management/image3placeholder.jpg',
     ],
     videoUrl: undefined,
     featured: false,
@@ -186,6 +210,11 @@ export const projects: Project[] = [
       // TODO: STAND-IN, not a real Lab Manager screenshot — purely
       // handed-off source code at this point, no screenshots exist. Swap
       // for actual screenshots if any become available.
+    ],
+    trailImages: [
+      '/images/trail/lab-manager/image1placeholder.jpg',
+      '/images/trail/lab-manager/image2placeholder.jpg',
+      '/images/trail/lab-manager/image3placeholder.jpg',
     ],
     videoUrl: undefined,
     featured: false,
