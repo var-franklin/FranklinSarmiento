@@ -9,37 +9,37 @@ import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/SplitText';
 
 /**
- * Full restyle + motion pass, replacing the unstyled draft this section
- * shipped as (bare <section>, no size classes anywhere, prose Tech
- * Stack, static photo, zero GSAP). Grounded in the About.tsx audit run
- * against globals.css's actual tokens and Hero.tsx/ScrollCue.tsx's
- * actual motion pattern — not generic advice.
+ * Content swap on the bio block, per the new copy: opening thesis line,
+ * a CS-grad/curiosity paragraph, the uncle's-shop origin story, the
+ * plan-build-reorganize process line, and a closing "who I want to
+ * work with" line. The old CvSUHimay-naming sentence and the hobbies
+ * paragraph are gone — not an oversight, the new copy doesn't include
+ * them.
  *
- * Bold move (locked): the type, not the photo. The uncle's-computer-shop
- * sentence is pulled out of its original paragraph and set at display
- * scale with a Y-axis word flip as it scrolls into view — nabilissa's
- * two hallmark traits (large-scale type, Y-axis rotation) landing on one
- * element rather than splitting across two. Everything else in the
- * section settles quietly in the same timeline: no per-element flourish
- * competing with it.
+ * Signature treatment moved: the display-scale SplitText word-flip
+ * used to sit on the uncle's-shop sentence, pulled out mid-paragraph.
+ * It now sits on line one, "I build digital products from idea to
+ * implementation." — it's the boldest single sentence in the section
+ * now, and it opens the block instead of interrupting it, so the flip
+ * line no longer needs bio lines both before and after it. Everything
+ * else keeps the line-mask + translateY reveal already established in
+ * this file (and in Hero.tsx before it). No opacity anywhere, same as
+ * before.
  *
- * No opacity anywhere in this file's motion, including the "quiet"
- * settles — opacity transitions are off the table project-wide, GSAP or
- * otherwise. Reveals use clip-path (photo) or an overflow-hidden mask +
- * translateY (bio lines, category blocks), same family of technique
- * Hero.tsx's line-mask reveal already uses, just applied to
- * paragraph/block-sized content instead of single text lines.
+ * bioLines goes from 3 (hand-indexed around the old flip line's
+ * position) to 4, running in a single loop after the flip line instead
+ * of being split before/after it — simpler now that the flip line is
+ * first rather than embedded.
+ *
  */
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
 
   // Runs the section's single entrance timeline once it scrolls into
-  // view: photo clip-path wipe, bio lines settling in, the pulled
-  // sentence flipping in on its words, then Tech Stack's five category
-  // blocks and Education settling with a light stagger. No ScrollTrigger
-  // precedent exists elsewhere in this codebase (Hero/ScrollCue both
-  // gate on the intro-complete event instead, since they're above the
-  // fold) — the trigger config below is authored fresh for this section.
+  // view: photo clip-path wipe, the flip-line thesis statement flipping
+  // in on its words, then the four bio lines settling in sequence,
+  // then Tech Stack's category blocks and Education settling with a
+  // light stagger.
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
@@ -49,8 +49,8 @@ export default function About() {
         if (!section) return;
 
         const photoFrame = section.querySelector<HTMLElement>('.about-photo-frame');
-        const bioLines = gsap.utils.toArray<HTMLElement>('.about-bio-line', section);
         const flipTarget = section.querySelector<HTMLElement>('.about-flip-line');
+        const bioLines = gsap.utils.toArray<HTMLElement>('.about-bio-line', section);
         const categoryBlocks = gsap.utils.toArray<HTMLElement>('.about-category', section);
         const educationBlock = section.querySelector<HTMLElement>('.about-education');
 
@@ -79,14 +79,14 @@ export default function About() {
           );
         }
 
-        if (bioLines[0]) tl.from(bioLines[0], { yPercent: 105, duration: 0.8 }, 0.1);
-
+        // Flips in early — it's the opening statement now, not a
+        // mid-paragraph interruption, so it doesn't wait on a first
+        // bio line to clear before it can start. rotateY capped at
+        // -85deg rather than a rounder -90/-100 for the same reason as
+        // before: past 90deg the element's back face shows (mirrored
+        // text) without backface-visibility handling, which this
+        // codebase doesn't set up elsewhere.
         if (split) {
-          // rotateY capped at -85deg rather than a rounder -90/-100 —
-          // past 90deg the element's back face starts showing (mirrored
-          // text) without backface-visibility handling, which this
-          // codebase doesn't set up elsewhere. Staying under 90 sidesteps
-          // that instead of adding a new CSS concern for one element.
           tl.from(
             split.words,
             {
@@ -95,22 +95,31 @@ export default function About() {
               duration: 0.6,
               stagger: 0.025,
             },
-            0.35
+            0.2
           );
-        }
+        }components\sections\about\About.tsx
 
-        if (bioLines[1]) tl.from(bioLines[1], { yPercent: 105, duration: 0.8 }, 0.75);
-        if (bioLines[2]) tl.from(bioLines[2], { yPercent: 105, duration: 0.8 }, 0.85);
+        // Four bio lines, looped with a tight stagger instead of
+        // hand-indexed — the old bioLines[0]/[1]/[2] indexing existed
+        // because the flip line split them into a before/after group.
+        // That's gone now that the flip line is first, so a loop is
+        // both simpler and more robust if the copy gains or loses a
+        // line later.
+        bioLines.forEach((line, i) => {
+          tl.from(line, { yPercent: 105, duration: 0.8 }, 0.9 + i * 0.1);
+        });
+
+        const bioEnd = 0.9 + bioLines.length * 0.1;
 
         categoryBlocks.forEach((block, i) => {
-          tl.from(block, { yPercent: 35, duration: 0.7 }, 1.0 + i * 0.06);
+          tl.from(block, { yPercent: 35, duration: 0.7 }, bioEnd + 0.25 + i * 0.06);
         });
 
         if (educationBlock) {
           tl.from(
             educationBlock,
             { yPercent: 30, duration: 0.7 },
-            1.0 + categoryBlocks.length * 0.06 + 0.1
+            bioEnd + 0.25 + categoryBlocks.length * 0.06 + 0.1
           );
         }
 
@@ -134,15 +143,11 @@ export default function About() {
       <h2 className="text-display-section text-ink">About</h2>
 
       {/* Asymmetric split (4/12 photo, 7/12 bio, col 5 left as a gap)
-          instead of the flagged 50/50 — a small formal headshot doesn't
-          need equal billing against the type this section is actually
-          built around. Single column on mobile. */}
+          instead of a 50/50 — a small formal headshot doesn't need
+          equal billing against the type this section is built around.
+          Single column on mobile. Unchanged from before. */}
       <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-12 md:items-start">
         <div className="md:col-span-4">
-          {/* overflow-hidden here does double duty: it's the mask for
-              the clip-path reveal below, and it's also why `fill` still
-              needs a positioned, sized parent — aspect-[3/4] + w-full
-              reserve that box before the image loads. */}
           <div className="about-photo-frame relative aspect-[3/4] w-full max-w-xs overflow-hidden">
             <Image
               src="/images/personal/formal-picture.jpg"
@@ -156,43 +161,45 @@ export default function About() {
 
         <div className="md:col-span-7 md:col-start-6">
           <div className="max-w-[62ch] space-y-6">
-            {/* Bio paragraphs at ink-secondary — deliberately quieter
-                than the flip line below, so that line reads as the
-                section's one bold move rather than one voice among
-                several equally loud ones (Finding 4: this section had
-                zero color hierarchy before). Copy is untouched; only the
-                original second paragraph is split across two <p> tags so
-                its first sentence can carry its own display-scale
-                treatment — same words, no rewording, no trimming. */}
-            <div className="overflow-hidden">
-              <p className="about-bio-line text-body-large text-ink-secondary">
-                I build software across the whole stack: interfaces
-                people click through, and the backend systems quietly
-                running underneath them. Most of what I build ends up in
-                the hands of real organizations, not just class
-                assignments. Most recently, that&apos;s CvSUHimay, my
-                thesis project.
-              </p>
-            </div>
-
             <p className="about-flip-line text-display-medium text-ink">
-              I got into computers young, watching my uncle run his own
-              computer shop and letting me loose on whatever machine
-              wasn&apos;t busy at the time.
+              I build digital products from idea to implementation.
             </p>
 
             <div className="overflow-hidden">
               <p className="about-bio-line text-body-large text-ink-secondary">
-                That curiosity turned into a computer science degree, and
-                eventually into actually shipping software people use.
+                I&apos;m a Computer Science graduate who builds digital
+                experiences through full-stack applications, interactive
+                interfaces, and experiments that satisfy my curiosity. I
+                like understanding how things work, but I&apos;m even
+                more interested in seeing what I can make with that
+                understanding.
               </p>
             </div>
 
             <div className="overflow-hidden">
               <p className="about-bio-line text-body-large text-ink-secondary">
-                Outside of code, I play guitar for my church&apos;s
-                praise and worship team, and I&apos;m working through a
-                backlog of anime and manga I doubt I&apos;ll ever finish.
+                I started messing with computers early, thanks to my
+                uncle&apos;s computer shop. Whenever a machine
+                wasn&apos;t busy, I was usually there, exploring it,
+                experimenting with it, and figuring out what I could
+                make it do.
+              </p>
+            </div>
+
+            <div className="overflow-hidden">
+              <p className="about-bio-line text-body-large text-ink-secondary">
+                That curiosity eventually became a process that
+                hasn&apos;t changed much since: get curious, plan it
+                out, build it, learn from what the build teaches me,
+                reorganize, and build again.
+              </p>
+            </div>
+
+            <div className="overflow-hidden">
+              <p className="about-bio-line text-body-large text-ink-secondary">
+                I&apos;m looking to work with people who have a problem
+                worth solving, an idea worth building, or a digital
+                experience worth making better.
               </p>
             </div>
           </div>
@@ -200,14 +207,8 @@ export default function About() {
       </div>
 
       {/*
-        Tech Stack — content unchanged from the resume/GitHub-README/
-        build-stack merge already agreed on. Structural change only:
-        five comma-joined <p> tags become five discrete category blocks,
-        each a label above a plain <ul> — list semantics are actually
-        correct for this content, and it's what lets each category move
-        as its own unit below instead of animating a wall of prose.
-        No numbering — the categories aren't a sequence, nothing orders
-        Languages before Databases.
+        Tech Stack — unchanged. Content, structure, and motion are
+        exactly as before; this section wasn't part of the copy swap.
       */}
       <div className="mt-16">
         <h3 className="text-display-medium text-ink">Tech Stack</h3>
@@ -302,15 +303,7 @@ export default function About() {
       </div>
 
       {/*
-        Education — content and label:value structure unchanged (still
-        Institution / Degree / Honors, still the exact wording locked in
-        the prior pass, including "Magna Cum Laude" stated outright).
-        Kept quieter than Tech Stack per direction: heading takes
-        ink-secondary instead of full ink, and it settles as one block
-        rather than getting its own per-line stagger — three facts don't
-        carry the same structural weight as five category lists, and the
-        motion/color here says so instead of the old identical h3+div
-        treatment erasing the difference.
+        Education — unchanged.
       */}
       <div className="about-education mt-12">
         <h3 className="text-display-medium text-ink-secondary">Education</h3>
